@@ -14,7 +14,7 @@ public class GoogleMapService {
         RestTemplate restTemplate = new RestTemplate();
         // read the key from configuration in production environment
 
-        String requestUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={location}&radius={radius}&key={key}";
+        String requestUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={location}&radius={radius}&origin={location}&key={key}";
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("location", latitude + "," + longtitude);
