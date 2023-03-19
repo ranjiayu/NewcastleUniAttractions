@@ -14,7 +14,7 @@ public class GoogleMapService {
         RestTemplate restTemplate = new RestTemplate();
         // read the key from configuration in production environment
 
-        String requestUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={location}&radius={radius}&origin={location}&key={key}";
+        String requestUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={location}&radius={radius}&key={key}";
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("location", latitude + "," + longtitude);
@@ -28,9 +28,7 @@ public class GoogleMapService {
     public String getAutocompletePlacesList(String input, double latitude, double longitude, Integer radius) {
         RestTemplate restTemplate = new RestTemplate();
 
-        String requestUrl = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input={input}&location={location}&radius={radius}&key={key}";
-
-        // Can add origin param which would allow the distance from autoCompleted places to be returned in metres
+        String requestUrl = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input={input}&location={location}&origin={location}&radius={radius}&key={key}";
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("input", input);
@@ -39,7 +37,7 @@ public class GoogleMapService {
         params.put("key", apiKey);
 
         // JSON string, return directly or process it. Here just return.
-        // TODO process JSON string into Array or List <PlaceAutoCompletePrediction>
+        // TODO process JSON string into Array or List(make a separate function to format Json data into Places Object)
 
         String resp = restTemplate.getForObject(requestUrl, String.class, params);
         return resp;
