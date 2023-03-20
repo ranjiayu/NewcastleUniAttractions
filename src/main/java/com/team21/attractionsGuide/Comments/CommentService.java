@@ -23,6 +23,12 @@ public class CommentService {
     public void createComment() {
         // TODO write a function that takes data from a frontend form and format it into a comment object
         //parameters to invoke the Comment constructor
+        // add created comment to the repository
        // return type Comment;
     };
+
+    public void deleteComment() {
+        // TODO write a function that allows a comment to be deleted
+        //  (comments have a unique id that can be used)
+    }
 }
