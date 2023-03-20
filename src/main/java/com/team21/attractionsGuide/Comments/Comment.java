@@ -77,15 +77,16 @@ public class Comment {
 
     public void setCommentText(String commentText) {this.commentText = commentText;}
 
+    //override of default toString()
     @Override
     public String toString() {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", rating='" + rating + '\'' +
+                ", commentTitle=" + commentTitle + '\'' +
                 ", commentDateTime=" + commentDateTime + '\'' +
                 ", age=" + age + '\'' +
-                ", commentTitle=" + commentTitle + '\'' +
                 ", commentText=" + commentText +
                 '}';
     }
