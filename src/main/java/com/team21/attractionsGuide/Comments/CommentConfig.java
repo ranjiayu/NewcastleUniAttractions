@@ -9,7 +9,7 @@ import java.util.List;
 @Configuration
 public class CommentConfig {
 
-    //comments are currently hardcoded for testing purposes
+    //comments are currently hardcoded for database testing purposes
     // TODO make comment config dynamic(make another function for this)
 
     @Bean

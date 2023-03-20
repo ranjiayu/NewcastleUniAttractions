@@ -9,12 +9,20 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
+    //autowired lets the CommentService class instantiate itself to provide access to the repository
     @Autowired
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
 
+    //findAll() returns a list of all comments in the repository
     public List<Comment> getComments() {
         return commentRepository.findAll();
     }
+
+    public void createComment() {
+        // TODO write a function that takes data from a frontend form and format it into a comment object
+        //parameters to invoke the Comment constructor
+       // return type Comment;
+    };
 }
