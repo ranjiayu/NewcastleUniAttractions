@@ -11,3 +11,7 @@ To start in your own environment, change the database configuration.
 mvn -N io.takari:maven:wrapper
 
 ./mvnw spring-boot:run
+
+
+
+asdasdasd
