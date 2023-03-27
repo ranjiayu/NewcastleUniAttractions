@@ -1,4 +1,4 @@
-package com.team21.attractionsGuide.Places;
+package com.team21.attractionsGuide.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,8 +37,6 @@ public class Place {
         this.place_id = placeID;
         this.types = types;
     }
-
-    public Place() {}
 
     public String getDescription() {
         return description;
