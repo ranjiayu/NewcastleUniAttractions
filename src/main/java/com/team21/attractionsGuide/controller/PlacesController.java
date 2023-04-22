@@ -1,22 +1,23 @@
 package com.team21.attractionsGuide.controller;
 
-import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.team21.attractionsGuide.entity.PlaceAutoComplete;
+import com.team21.attractionsGuide.entity.Place;
 import com.team21.attractionsGuide.service.GoogleMapService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * PlaceController class handles HTTP requests related to the Google Places API.
  * Date: 2023/3/26
  */
 @RestController
-@CrossOrigin
 @RequestMapping("/place")
-public class PlaceController {
+public class PlacesController {
 
     /**
      * GoogleMapService is used for handling place-related business logic.
@@ -73,14 +74,16 @@ public class PlaceController {
         //String containing merged Json of all requests
         String mergedJson = googleService.mergeJsonStrings(tempStringArray);
 
-        // TODO: Convert mergedJson into PlaceResponse instances
-        // So it will be easy to do other works, such as
-        // removing duplicates, changing their 'types', loading them into database etc.
+        //format the response string into a place details Object
+        ArrayList<Place> placeResponseArray = Place.formatPlacesResult(mergedJson);
+
+        // remove duplicate items by place_id
 
 
+        // Respond with json
+        ObjectMapper mapper = new ObjectMapper();
 
-        // Respond with merged Json
-        return mergedJson;
+        return mapper.writeValueAsString(placeResponseArray);
     }
 
     /**
@@ -104,19 +107,27 @@ public class PlaceController {
             @RequestParam double latitude,
             @RequestParam double longitude,
             @RequestParam Integer radius
-    ) {
+
+    ) throws JsonProcessingException {
         // TODO: Valid the parameters, springboot will check the type automatically.
         //  We should valid them logically.
 
         // handle by GoogleMapService class
         String respString = googleService.getAutocompletePlacesApiString(input, latitude, longitude, radius);
+
+        //format the response string into a place details Object
+        ArrayList<PlaceAutoComplete> placeResponseArray = PlaceAutoComplete.formatPlacesResult(respString);
+
         // Respond with json
-        return respString;
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.writeValueAsString(placeResponseArray);
     }
 
     /**
      * Creates a Place Details API request using frontend data with a service function.
-     * gets the result as a Json formatted String of place details and sends it to the client.
+     * gets the result as a Json formatted String of place details and formats it to a PlaceDetails Object
+     * then sends it to the client.
      *
      * @param placeID   - The placeID from Google Places required to get additional details
      * @return          - A Json string containing the results of the API call
@@ -129,13 +140,20 @@ public class PlaceController {
             // Get parameters from the url
             // eg. /place/getDetails?placeID=123, get 123
             @RequestParam String placeID
-    ) {
+
+    ) throws JsonProcessingException {
         // TODO: Valid the parameters, springboot will check the type automatically.
         //  We should valid them logically.
 
         // handle by GoogleMapService class
         String respString = googleService.getPlaceDetailsApiString(placeID);
+
+        //format into PlaceDetails object
+        Place place = Place.formatPlaceDetailsResult(respString);
+
         // Respond with json
-        return respString;
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.writeValueAsString(place);
     }
 }
